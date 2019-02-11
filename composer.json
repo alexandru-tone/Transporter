@@ -1,0 +1,22 @@
+{
+    "name": "atone/transporter",
+    "description": "Transporter / Boarding cards sorter",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexandru Tone",
+            "email": "alexandru.tone81@yahoo.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Atone\\": "Atone/"
+        }
+    }
+}
