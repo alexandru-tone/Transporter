@@ -24,16 +24,11 @@ class Plane extends AbstractSeatedTransport
     public function __construct(string $departure, string $arrival, array $extraInfo)
     {
         parent::__construct($departure, $arrival, $extraInfo);
-        $this->gate = isset($extraInfo['Gate']) ? $extraInfo['Gate'] : '';
-        $this->baggage = isset($extraInfo['Baggage']) ? $extraInfo['Baggage'] : '';
+        $this->gate = isset($extraInfo[AbstractTransport::GATE]) ? $extraInfo[AbstractTransport::GATE] : '';
+        $this->baggage = isset($extraInfo[AbstractTransport::BAGGAGE]) ? $extraInfo[AbstractTransport::BAGGAGE] : '';
     }
 
     public function explain()
-    {
-        echo $this->getExplanation();
-    }
-
-    public function getExplanation()
     {
         $explanation = sprintf("From %s take flight %s to %s. Gate %s, seat %s. Baggage will we automatically transferred from your last leg. ",
             $this->departure,
@@ -45,7 +40,6 @@ class Plane extends AbstractSeatedTransport
         if (strlen($this->baggage)) {
             $explanation = sprintf("%s Baggage drop at ticket counter %s.", $explanation,$this->baggage);
         }
-        return $explanation . "\n";
+        echo $explanation . "\n";
     }
-
 }

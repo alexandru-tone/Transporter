@@ -59,10 +59,12 @@ class Transporter
         ];
         $decodedDepartures = [];
         $decodedArrivals = [];
+        $departure = AbstractTransport::DEPARTURE;
+        $arrival = AbstractTransport::ARRIVAL;
         foreach($this->decoded as $key => $val) {
-            $decodedDepartures[$val['departure']]['id'] = $key;
-            $decodedDepartures[$val['departure']]['arrival'] = $val['arrival'];
-            $decodedArrivals[$val['arrival']] = $val['departure'];
+            $decodedDepartures[$val[$departure]]['id'] = $key;
+            $decodedDepartures[$val[$departure]][$arrival] = $val[$arrival];
+            $decodedArrivals[$val[$arrival]] = $val[$departure];
         }
         $startingPoint = array_diff(array_keys($decodedDepartures), array_keys($decodedArrivals));
         $result['startingPoint'] = $startingPoint;
@@ -76,14 +78,18 @@ class Transporter
     private function tell(array $sorted)
     {
         foreach ($sorted as $boardingCard) {
-            $className = $boardingCard['Transportation'];
+            $className = $boardingCard[AbstractTransport::TRANSP];
+            if (!in_array($className, ['Bus', 'Plane', 'Train'])) {
+                continue;
+            }
             $className = "Atone\Transporter\\" . $className;
             /** @var TransportInterface $transport */
-            $transport = new $className($boardingCard['departure'], $boardingCard['arrival'], $boardingCard);
+            $transport = new $className(
+                $boardingCard[AbstractTransport::DEPARTURE],
+                $boardingCard[AbstractTransport::ARRIVAL],
+                $boardingCard);
             $transport->explain();
         }
         echo "You have arrived at your final destination. \n";
     }
-
-
 }

@@ -24,7 +24,9 @@ abstract class AbstractSeatedTransport extends AbstractTransport
     public function __construct(string $departure, string $arrival, array $extraInfo)
     {
         parent::__construct($departure, $arrival);
-        $this->transportationNumber = isset($extraInfo['Transportation_number']) ? $extraInfo['Transportation_number'] : '';
-        $this->seat = isset($extraInfo['Seat']) ? $extraInfo['Seat'] : '';
+        $this->transportationNumber = isset($extraInfo[AbstractTransport::TRANSP_NUM])
+            ? $extraInfo[AbstractTransport::TRANSP_NUM]
+            : '';
+        $this->seat = isset($extraInfo[AbstractTransport::SEAT]) ? $extraInfo[AbstractTransport::SEAT] : '';
     }
 }
